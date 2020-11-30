@@ -1,0 +1,154 @@
+\documentclass[11pt, a4paper, notitlepage]{article}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{fancyhdr}
+\usepackage{fancyvrb}
+\usepackage{enumitem}
+\usepackage{listings}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+
+\pagestyle{fancy}
+
+\renewcommand{\headrulewidth}{1pt}
+\fancyhead[L]{\textbf{ASA}}
+\fancyhead[R]{\textit{Damien Perez \& Loïc LASHERME}}
+
+\renewcommand{\footrulewidth}{1pt}
+\fancyfoot[L]{\textit{MP:X3IA110}}
+\fancyfoot[C]{}
+\fancyfoot[R]{page \thepage}
+
+\newcommand\tab{\hspace*{10mm}}
+
+\setlength\parindent{0pt}
+
+\hypersetup{
+    colorlinks = true,
+}
+
+\lstset{
+   language=Java,
+   extendedchars=true,
+   basicstyle=\scriptsize
+}
+
+\begin{document}
+
+\begin{center}
+   \huge\textbf{Architecture et Styles d'Architectures}\\
+   \vspace*{3mm}
+   \large{\url{https://github.com/lasherme/AsaPerezLasherme.git} }
+\end{center}
+\vspace{2mm}
+
+\section*{Introduction}
+\tab Au cours de cette unité d'enseignement, nous avons pu observer plusieurs styles d'architectures, et plus particulièrement comment fonctionne une architecture par composant. De ce fait, dans notre projet, nous avons dû réaliser une architecture de A à Z. En premier lieu, nous avons dû concevoir cette architecture par composant vu en cours. Une fois cela réalisé, nous avons dû adapter le modèle bien connu du client-serveur à notre architecture par composant préalablement créée. Et enfin nous avons instancier le modèle client-serveur réalisé grâce à l'architecture par composant conçu.
+
+\section*{1$^{ere}$ partie : Conception}
+
+\subsection*{M2}
+\tab Pour commencer la metamodélisation du projet, nous devions créer un style d'architecture par composant. Comme nous pouvons le voir sur le \href{run:../img/Asa_M2.png}{metamodèle}, l'architecture doit commencer par une configuration, qui elle même peut contenir d'autre sous-configuration. Une configuration est composée d'interfaces afin de pouvoir communiquer avec d'autres composants extérieurs. De plus, une configuration possède des composant et des connecteurs. Un composant peut soit être primitif, soit composite. Un composant primitif, est un composant possédant une interface fournie et d'une autre requise dans lesquelles nous pouvons y retrouver des ports. Un composant composite n'est rien d'autre qu'un composant primitif dans lequel nous pouvons y stocker d'autres composants ou connecteurs. Les connecteurs sont comme les composants, soit primitif soit composite. Les connecteurs permettent de relier les composants entre eux à l'aide de lien d'attachement. De plus, ils permettent un tas de fonctionnalités diverses grâce à la \verb"glue" qui les compose. Cette \verb"glue" peut permettre par exemple de traduire les informations d'un composant A vers un composant B, servir de sécurité, etc... Les composants possèdent deux interfaces, une \verb"FROM" et une autre \verb"TO" --- équivalentes aux interfaces fournies et requises. Sur ces interfaces, nous pouvons y retrouver des rôles --- équivalents aux ports des composants. Pour relier des composants entre eux nous créons un lien d'attachement entre le composant A vers le connecteur, et un autre lien d'attachement du connecteur vers un composant B. En fait, nous connectons un port requis du composant à un rôle fourni du connecteur et vis-versa. Et pour finir, si nous voulons relier un port d'un composant à un composant extérieur de la configuration, nous établissons un lien binding entre le port concerné et un port de sa configuration afin qu'un port externe puisse avoir accès aux fonctionnalités du composant interne de la configuration.
+
+\subsection*{M1}
+\tab Dans cette partie, nous devions donc créer un \href{run:../img/Asa_M1.png}{modèle} client-serveur basé sur l'architecture à composant préalablement conçu. Nous avons donc créé une configuration client-serveur générale qui engloble tout le reste. Nous avons donc créé un composant client et un composite composant serveur. Ceux-ci sont relié grâce à un connecteur \verb"RPC". Par le biai de ce connecteur, le client peut communiquer au serveur grâce à la méthode \verb"sendRequest" et le serveur peut écouter ses clients grâce à la méthode \verb"receiveRequest". A l'intérieur du composite composant serveur, nous pouvons y retrouver 3 autres sous-composants : \verb"database", \verb"connectionManager", \verb"securityManager". Ces composants sont reliés les uns aux autres à l'aide de connecteurs. Cela permet ainsi de les faire communiquer entre eux à l'aide de leurs ports. Les connecteurs permettent de faire la liaison entre chaques composants. Ainsi ils permettent de traduire ou même de sérialiser l'information. Pour finir, \verb"connectionManager" à besoin de pouvoir communiquer avec l'extérieur, c'est pour cela qu'il relie un de ses ports à un port de la configuration à l'aide d'un lien binding.
+
+\section*{2$^{eme}$ partie : Instanciation}
+
+\begin{lstlisting}
+import composant.*;
+import compositeComposant.CompositeComposantServer;
+import connecteur.*;
+import configuration.*;
+import glue.*;
+import intf.*;
+import lienAttachement.*;
+import lienBinding.LienBindingExternalSocketComposantExternalSocketConfiguration;
+import port.*;
+import service.*;
+
+
+public class Main {
+  public static void main(String args[]) {
+
+    // Port
+    InterfacePort PortRequisClient = new Port("portRequisComposantClient");
+
+    // Glue
+    InterfaceGlue GlueAuthentification = new GlueAuthentification("auhtentification");
+    InterfaceGlue GlueDatabaseConnection = new GlueDatabaseConnection("dataBaseConnection");
+    InterfaceGlue GlueSerialiseCommunication =
+      new GlueSerialiseCommunication("serialise and communication");
+    InterfaceGlue Glue = new Glue("glueConnecteur");
+
+    // Service
+    InterfaceService ServiceRequis = new Service("serviceRequis");
+    InterfaceService ServiceFourni = new Service("serviceFourni");
+
+    //Composant
+    InterfacePrimitiveComposant ComposantClient =
+      new PrimitiveComposantClient(ServiceRequis,ServiceFourni,PortRequisClient);
+    InterfacePrimitiveComposant ComposantDataBase = new PrimitiveComposantDataBase();
+    InterfacePrimitiveComposant ComposantConnectionManager =
+      new PrimitiveComposantConnectionManager();
+    InterfacePrimitiveComposant ComposantSecurityManager = new PrimitiveComposantSecurityManager();
+
+    // Connecteur
+    InterfaceConnecteur ConnecteurAuthentification =
+      new ConnecteurAuthentification("connecteurAuthentification",GlueAuthentification);
+    InterfaceConnecteur ConnecteurDataBaseConnection =
+      new ConnecteurDataBaseConnection("connecteurDataBaseConnection",GlueDatabaseConnection);
+    InterfaceConnecteur ConnecteurRPC = new ConnecteurRPC(GlueSerialiseCommunication);
+    InterfaceConnecteur Connecteur = new Connecteur("connecteurCompositeComposant",Glue);
+
+    // Configuration
+    InterfaceConfiguration ConfigurationServeur = new ConfigurationServeur();
+
+    // Composite Composant
+    CompositeComposantServer compositeComposantServer =
+      new CompositeComposantServer(Connecteur,ConnecteurDataBaseConnection,ConfigurationServeur);
+
+    // Lien Attachement
+    LienAttachementRoleCalledPortDbQuery lienAttachementRoleCalledPortDbQuery =
+      new LienAttachementRoleCalledPortDbQuery(
+      Connecteur.getRoleFourni(),ComposantConnectionManager.getPortRequis());
+    LienAttachementRoleCalledPortReceiveRequest LienAttachementRoleCalledPortReceiveRequest =
+      new LienAttachementRoleCalledPortReceiveRequest(
+      ConnecteurRPC.getRoleFourni(),ConfigurationServeur.getPortRequis());
+    LienAttachementRoleCalledPortSecurityCheck LienAttachementRoleCalledPortSecurityCheck =
+      new LienAttachementRoleCalledPortSecurityCheck(
+      ConnecteurAuthentification.getRoleFourni(),ComposantConnectionManager.getPortRequis());
+    LienAttachementRoleCalledPortSecurityManagement LienAttachementRoleCalledPortSecurityManagement =
+      new LienAttachementRoleCalledPortSecurityManagement(
+      ConnecteurDataBaseConnection.getRoleFourni(), ComposantDataBase.getPortRequis());
+    LienAttachementRoleCallerPortCheckQuery LienAttachementRoleCallerPortCheckQuery =
+      new LienAttachementRoleCallerPortCheckQuery(ConnecteurDataBaseConnection.getRoleRequis(),
+      ComposantSecurityManager.getPortFourni());
+    LienAttachementRoleCallerPortQueryInterrogation LienAttachementRoleCallerPortQueryInterrogation =
+      new LienAttachementRoleCallerPortQueryInterrogation(
+      Connecteur.getRoleRequis(),ComposantDataBase.getPortFourni());
+    LienAttachementRoleCallerPortSecurityAuthentification
+    LienAttachementRoleCallerPortSecurityAuthentification =
+      new LienAttachementRoleCallerPortSecurityAuthentification(
+      ConnecteurAuthentification.getRoleRequis(), ComposantSecurityManager.getPortFourni());
+    LienAttachementRoleCallerPortSendRequest LienAttachementRoleCallerPortSendRequest =
+      new LienAttachementRoleCallerPortSendRequest(
+      ConnecteurRPC.getRoleRequis(),ComposantClient.getPortFourni());
+
+    // Lien Binding
+    LienBindingExternalSocketComposantExternalSocketConfiguration
+    LienBindingExternalSocketComposantExternalSocketConfiguration =
+      new LienBindingExternalSocketComposantExternalSocketConfiguration(
+      compositeComposantServer.getConfigurationServeur().getPortFournis(),
+      ComposantConnectionManager.getPortFourni());
+  }
+}
+\end{lstlisting}
+
+\section*{Conclusion}
+\tab Pour conclure nous avons beaucoup appris au cours de ce projet. Tout d'abord la création du M2 a nécessité beaucoup de recherches afin de mieux comprendre ce qui était attendu. Dans ce premier diagramme nous avons ainsi pu définir le méta Modèle de l'architecture du projet, c'est ici que les interfaces étaient définies, c'est ainsi que nous avons défini notre modèle client/serveur. Vient ensuite le M1, le diagramme de classe qui instancie les éléments du M2. Dans ce dernier nous avons liés les différents composants entre eux afin de rentre fonctionnelle et cohérente notre architecture. Le point qui nous a posé le plus de soucis fut les \verb"glues". En effet nous ne comprenions pas au premier abord l'utilité de cet élément, c'est en cherchant dans vos publications que nous sommes tombés sur l'article " Metamodel for Architecture DescriptionLanguage Based on First-Order Connector Types" qui, nous a facilité la compréhension du projet. Enfin nous avons procédé à l'implementation des diagramme en Java, nous aurions pu procéder avec le langge ACME, cependant à cause de la crise sanitaire nous n'avons pas pu faire le projet dans sa globalité. Nous avons préféré utiliser un langage que nous connaissions déjà.
+
+\end{document}
