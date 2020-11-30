@@ -2,11 +2,11 @@ package intf;
 
 public abstract class InterfaceConfiguration {
     private InterfacePort portRequis;
-    private InterfacePort portFournis;
+    private InterfacePort portFourni;
 
     public InterfaceConfiguration(InterfacePort portR,InterfacePort portF){
         this.portRequis = portR;
-        this.portFournis = portF;
+        this.portFourni = portF;
     }
 
     public InterfacePort getPortRequis() {
@@ -14,7 +14,7 @@ public abstract class InterfaceConfiguration {
     }
 
     public InterfacePort getPortFournis() {
-        return portFournis;
+        return portFourni;
     }
 
     public void setPortRequis(InterfacePort portRequis) {
@@ -22,6 +22,6 @@ public abstract class InterfaceConfiguration {
     }
 
     public void setPortFournis(InterfacePort portFournis) {
-        this.portFournis = portFournis;
+        this.portFourni = portFournis;
     }
 }

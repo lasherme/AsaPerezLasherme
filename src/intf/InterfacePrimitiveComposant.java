@@ -1,11 +1,11 @@
 package intf;
 
-public abstract class InterfaceComposant {
+public abstract class InterfacePrimitiveComposant {
 
     private InterfacePort portFourni;
     private InterfacePort portRequis;
 
-    public InterfaceComposant(InterfacePort pR,InterfacePort pF){
+    public InterfacePrimitiveComposant(InterfacePort pR, InterfacePort pF){
         this.portFourni = pF;
         this.portRequis = pR;
     }

@@ -6,10 +6,13 @@ import port.PortFourniExternalSocketConfiguration;
 
 public class LienBindingExternalSocketComposantExternalSocketConfiguration {
 
-    private InterfacePort portFourniComposant = new PortFourniExternalSocketComposant();
-    private InterfacePort getPortFourniConfiguration = new PortFourniExternalSocketConfiguration();
+    private InterfacePort portFourniComposant;
+    private InterfacePort getPortFourniConfiguration;
 
-    public LienBindingExternalSocketComposantExternalSocketConfiguration() {}
+    public LienBindingExternalSocketComposantExternalSocketConfiguration(InterfacePort portFC,InterfacePort portFConf) {
+        this.portFourniComposant = portFC;
+        this.getPortFourniConfiguration = portFConf;
+    }
 
     public InterfacePort getPortFourniComposant() {
         return portFourniComposant;

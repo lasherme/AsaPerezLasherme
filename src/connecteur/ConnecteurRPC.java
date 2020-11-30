@@ -11,9 +11,9 @@ public class ConnecteurRPC extends InterfaceConnecteur {
     private String name = "RPC";
     private InterfaceGlue glue;
 
-    public ConnecteurRPC(String name) {
+    public ConnecteurRPC(InterfaceGlue g) {
         super(new RoleRequisCaller(),new RoleFourniCalled());
-        this.glue = new GlueSerialiseCommunication(name);
+        this.glue = g;
     }
 
     public String getName() {

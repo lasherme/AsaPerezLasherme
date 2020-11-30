@@ -7,10 +7,13 @@ import role.RoleRequisCaller;
 
 public class LienAttachementRoleCallerPortQueryInterrogation {
 
-    private InterfaceRole roleRequis = new RoleRequisCaller();
-    private InterfacePort portFourni = new PortFourniQueryInterogation();
+    private InterfaceRole roleRequis;
+    private InterfacePort portFourni;
 
-    public LienAttachementRoleCallerPortQueryInterrogation() {}
+    public LienAttachementRoleCallerPortQueryInterrogation(InterfaceRole rR,InterfacePort pF) {
+        this.roleRequis = rR;
+        this.portFourni = pF;
+    }
 
     public InterfaceRole getRoleRequis() {
         return roleRequis;

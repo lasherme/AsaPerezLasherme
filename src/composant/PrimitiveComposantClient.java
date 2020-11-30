@@ -1,20 +1,20 @@
 package composant;
 
 import configuration.ConfigurationClientServeur;
-import intf.InterfaceComposant;
+import intf.InterfacePrimitiveComposant;
 import intf.InterfaceConfiguration;
 import intf.InterfacePort;
 import intf.InterfaceService;
 import port.PortFourniSendRequest;
 
-public class ComposantClient extends InterfaceComposant {
+public class PrimitiveComposantClient extends InterfacePrimitiveComposant {
 
     private String name = "client";
     private InterfaceService serviceRequis;
     private InterfaceService serviceFournis;
     private InterfaceConfiguration configurationClientServeur;
 
-    public ComposantClient(InterfaceService sR, InterfaceService sF, InterfacePort pR) {
+    public PrimitiveComposantClient(InterfaceService sR, InterfaceService sF, InterfacePort pR) {
         super(pR,new PortFourniSendRequest());
         this.serviceFournis = sF;
         this.serviceRequis = sR;

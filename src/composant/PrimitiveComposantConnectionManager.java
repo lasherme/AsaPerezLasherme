@@ -1,18 +1,18 @@
 package composant;
 
-import intf.InterfaceComposant;
+import intf.InterfacePrimitiveComposant;
 import intf.InterfacePort;
 import port.PortFourniExternalSocketComposant;
 import port.PortRequisDbQuery;
 import port.PortRequisSecurityCheck;
 
-public class ComposantConnectionManager extends InterfaceComposant {
+public class PrimitiveComposantConnectionManager extends InterfacePrimitiveComposant {
 
     private String name = "connectionManager";
 
     private InterfacePort portRequis = new PortRequisSecurityCheck();
 
-    public ComposantConnectionManager() {
+    public PrimitiveComposantConnectionManager() {
         super(new PortRequisDbQuery(),new PortFourniExternalSocketComposant());
     }
 

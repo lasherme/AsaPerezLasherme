@@ -11,10 +11,10 @@ public class ConnecteurDataBaseConnection extends InterfaceConnecteur {
     private String name;
     private InterfaceGlue glue;
 
-    public ConnecteurDataBaseConnection(String n,String glueName) {
+    public ConnecteurDataBaseConnection(String n,InterfaceGlue g) {
         super(new RoleRequisCaller(),new RoleFourniCalled());
         this.name = n;
-        this.glue = new GlueDatabaseConnection(glueName);
+        this.glue = g;
     }
 
     public String getName() {

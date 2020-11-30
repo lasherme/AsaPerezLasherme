@@ -7,10 +7,13 @@ import role.RoleRequisCaller;
 
 public class LienAttachementRoleCallerPortSecurityAuthentification {
 
-    private InterfaceRole roleRequis = new RoleRequisCaller();
-    private InterfacePort portFournis = new PortFourniSecurityAuthentification();
+    private InterfaceRole roleRequis;
+    private InterfacePort portFourni;
 
-    public LienAttachementRoleCallerPortSecurityAuthentification() {}
+    public LienAttachementRoleCallerPortSecurityAuthentification(InterfaceRole rR,InterfacePort pF) {
+        this.roleRequis = rR;
+        this.portFourni = pF;
+    }
 
     public InterfaceRole getRoleRequis() {
         return roleRequis;
@@ -21,10 +24,10 @@ public class LienAttachementRoleCallerPortSecurityAuthentification {
     }
 
     public InterfacePort getPortFournis() {
-        return portFournis;
+        return portFourni;
     }
 
     public void setPortFournis(InterfacePort portFournis) {
-        this.portFournis = portFournis;
+        this.portFourni = portFournis;
     }
 }

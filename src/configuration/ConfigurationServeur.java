@@ -1,6 +1,5 @@
 package configuration;
 
-import CompositeComposant.CompositeComposantServer;
 import intf.InterfaceConfiguration;
 import port.PortFourniExternalSocketConfiguration;
 import port.PortRequisReceiveRequest;
@@ -9,12 +8,10 @@ public class ConfigurationServeur extends InterfaceConfiguration {
 
     private String name = "serveur";
     private InterfaceConfiguration configurationClientServeur;
-    private CompositeComposantServer compositeComposantServer;
 
-    public ConfigurationServeur(String compositeComposantServerConnecteurName,String compositeComposantServerGlueName,String compositeComposantServerDataBaseConnectionConnecteurName,String compositeComposantServerDataBaseConnectionConnecteurGlueName) {
+    public ConfigurationServeur() {
         super(new PortRequisReceiveRequest(), new PortFourniExternalSocketConfiguration());
         this.configurationClientServeur = new ConfigurationClientServeur(this.getPortFournis(),this.getPortRequis());
-        this.compositeComposantServer = new CompositeComposantServer(compositeComposantServerConnecteurName,compositeComposantServerGlueName,compositeComposantServerDataBaseConnectionConnecteurName,compositeComposantServerDataBaseConnectionConnecteurGlueName);
     }
 
     public String getName() {
@@ -31,13 +28,5 @@ public class ConfigurationServeur extends InterfaceConfiguration {
 
     public void setConfigurationClientServeur(InterfaceConfiguration configurationClientServeur) {
         this.configurationClientServeur = configurationClientServeur;
-    }
-
-    public CompositeComposantServer getCompositeComposantServer() {
-        return compositeComposantServer;
-    }
-
-    public void setCompositeComposantServer(CompositeComposantServer compositeComposantServer) {
-        this.compositeComposantServer = compositeComposantServer;
     }
 }

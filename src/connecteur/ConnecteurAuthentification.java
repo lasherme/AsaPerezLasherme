@@ -11,10 +11,10 @@ public class ConnecteurAuthentification extends InterfaceConnecteur {
     private String name;
     private InterfaceGlue glue;
 
-    public ConnecteurAuthentification(String n,String glueName) {
+    public ConnecteurAuthentification(String n,InterfaceGlue g) {
         super(new RoleRequisCaller(),new RoleFourniCalled());
         this.name = n;
-        this.glue = new GlueAuthentification(glueName);
+        this.glue = g;
     }
 
     public String getName() {

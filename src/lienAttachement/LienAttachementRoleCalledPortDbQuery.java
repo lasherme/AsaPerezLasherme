@@ -2,15 +2,16 @@ package lienAttachement;
 
 import intf.InterfacePort;
 import intf.InterfaceRole;
-import port.PortRequisDbQuery;
-import role.RoleFourniCalled;
 
 public class LienAttachementRoleCalledPortDbQuery {
 
-    private InterfaceRole roleFourni = new RoleFourniCalled();
-    private InterfacePort portRequis = new PortRequisDbQuery();
+    private InterfaceRole roleFourni;
+    private InterfacePort portRequis;
 
-    public LienAttachementRoleCalledPortDbQuery() {}
+    public LienAttachementRoleCalledPortDbQuery(InterfaceRole rF,InterfacePort pR) {
+        this.roleFourni = rF;
+        this.portRequis = pR;
+    }
 
     public InterfaceRole getRoleFourni() {
         return roleFourni;

@@ -7,10 +7,13 @@ import role.RoleFourniCalled;
 
 public class LienAttachementRoleCalledPortSecurityManagement {
 
-    private InterfaceRole roleFourni = new RoleFourniCalled();
-    private InterfacePort portRequis = new PortRequisSecurityManagement();
+    private InterfaceRole roleFourni;
+    private InterfacePort portRequis;
 
-    public LienAttachementRoleCalledPortSecurityManagement() {}
+    public LienAttachementRoleCalledPortSecurityManagement(InterfaceRole rF,InterfacePort pR) {
+        this.roleFourni = rF;
+        this.portRequis = pR;
+    }
 
     public InterfaceRole getRoleFourni() {
         return roleFourni;

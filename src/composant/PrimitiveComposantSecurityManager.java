@@ -1,14 +1,14 @@
 package composant;
 
-import intf.InterfaceComposant;
+import intf.InterfacePrimitiveComposant;
 import port.PortFourniCheckQuery;
 import port.PortFourniSecurityAuthentification;
 
-public class ComposantSecurityManager extends InterfaceComposant {
+public class PrimitiveComposantSecurityManager extends InterfacePrimitiveComposant {
 
     private String name = "securityManager";
 
-    public ComposantSecurityManager() {
+    public PrimitiveComposantSecurityManager() {
         super(new PortFourniCheckQuery(),new PortFourniSecurityAuthentification());
     }
 
