@@ -57,6 +57,12 @@
 \tab Dans cette partie, nous devions donc créer un \href{run:../img/Asa_M1.png}{modèle} client-serveur basé sur l'architecture à composant préalablement conçu. Nous avons donc créé une configuration client-serveur générale qui engloble tout le reste. Nous avons donc créé un composant client et un composite composant serveur. Ceux-ci sont relié grâce à un connecteur \verb"RPC". Par le biai de ce connecteur, le client peut communiquer au serveur grâce à la méthode \verb"sendRequest" et le serveur peut écouter ses clients grâce à la méthode \verb"receiveRequest". A l'intérieur du composite composant serveur, nous pouvons y retrouver 3 autres sous-composants : \verb"database", \verb"connectionManager", \verb"securityManager". Ces composants sont reliés les uns aux autres à l'aide de connecteurs. Cela permet ainsi de les faire communiquer entre eux à l'aide de leurs ports. Les connecteurs permettent de faire la liaison entre chaques composants. Ainsi ils permettent de traduire ou même de sérialiser l'information. Pour finir, \verb"connectionManager" à besoin de pouvoir communiquer avec l'extérieur, c'est pour cela qu'il relie un de ses ports à un port de la configuration à l'aide d'un lien binding.
 
 \section*{2$^{eme}$ partie : Instanciation}
+\tab Dans cette deuxieme partie nous allons détailler le code que nous avons conçu à partir des diagrammes, pour une meilleur lisibilité n'hésitez pas à aller sur le github dont le lien est sur la page de garde du rapport.\\
+\tab Tout d'abord nous avons créé des classes abstraites pour presque chaque modules du M2. Ces classes sont instanciées dans le package \verb"intf". Ensuite nous avons implémenté ces classes en suivant le diagramme M1 cette fois-ci, certains objets étant liés nous avons définis des liens entre ces derniers. Afin de vérifier que tout s'imbriquais convenablement, nous avons créé un \verb"Main" qui instancie tout les objets dont nous avons besoin ainsi que les liens entre eux.
+
+\vspace*{3mm}
+\hrule
+\vspace*{3mm}
 
 \begin{lstlisting}
 import composant.*;
@@ -148,7 +154,11 @@ public class Main {
 }
 \end{lstlisting}
 
+\vspace*{3mm}
+\hrule
+\vspace*{3mm}
+
 \section*{Conclusion}
-\tab Pour conclure nous avons beaucoup appris au cours de ce projet. Tout d'abord la création du M2 a nécessité beaucoup de recherches afin de mieux comprendre ce qui était attendu. Dans ce premier diagramme nous avons ainsi pu définir le méta Modèle de l'architecture du projet, c'est ici que les interfaces étaient définies, c'est ainsi que nous avons défini notre modèle client/serveur. Vient ensuite le M1, le diagramme de classe qui instancie les éléments du M2. Dans ce dernier nous avons liés les différents composants entre eux afin de rentre fonctionnelle et cohérente notre architecture. Le point qui nous a posé le plus de soucis fut les \verb"glues". En effet nous ne comprenions pas au premier abord l'utilité de cet élément, c'est en cherchant dans vos publications que nous sommes tombés sur l'article " Metamodel for Architecture DescriptionLanguage Based on First-Order Connector Types" qui, nous a facilité la compréhension du projet. Enfin nous avons procédé à l'implementation des diagramme en Java, nous aurions pu procéder avec le langge ACME, cependant à cause de la crise sanitaire nous n'avons pas pu faire le projet dans sa globalité. Nous avons préféré utiliser un langage que nous connaissions déjà.
+\tab Pour conclure nous avons beaucoup appris au cours de ce projet. Tout d'abord la création du M2 a nécessité beaucoup de recherches afin de mieux comprendre ce qui était attendu. Dans ce premier diagramme nous avons ainsi pu définir le metamodèle de l'architecture du projet, c'est ici que les interfaces étaient définies. C'est ainsi que nous avons défini notre modèle client-serveur. Vient ensuite le M1, le diagramme de classe qui instancie les éléments du M2. Dans ce dernier nous avons liés les différents composants entre eux afin de rentre fonctionnelle et cohérente notre architecture. Le point qui nous a posé le plus de soucis fut les \verb"glues". En effet nous ne comprenions pas au premier abord l'utilité de cet élément, c'est en cherchant dans vos publications que nous sommes tombés sur l'article "Metamodel for Architecture Description Language Based on First-Order Connector Types", qui nous a facilité la compréhension du projet. Enfin nous avons procédé à l'implémentation des diagrammes en Java, nous aurions pu procéder avec le langage ACME, cependant à cause de la crise sanitaire nous n'avons pas pu faire le projet dans sa globalité. Nous avons préféré utiliser un langage que nous connaissions déjà.
 
 \end{document}
